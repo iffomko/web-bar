@@ -1,4 +1,4 @@
-package org.iffomko.server.domain.table;
+package org.iffomko.server.domain.bartable;
 
 import jakarta.persistence.*;
 import lombok.Getter;

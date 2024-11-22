@@ -3,7 +3,7 @@ package org.iffomko.server.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.iffomko.server.domain.table.BarTable;
+import org.iffomko.server.domain.bartable.BarTable;
 
 import java.time.Instant;
 
@@ -15,9 +15,9 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
     @ManyToOne
     @JoinColumn(name = "bar_table_id", nullable = false)
     private BarTable table;

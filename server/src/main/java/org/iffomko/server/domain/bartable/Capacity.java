@@ -1,4 +1,4 @@
-package org.iffomko.server.domain.table;
+package org.iffomko.server.domain.bartable;
 
 /**
  * Вместимость стола

@@ -1,6 +1,6 @@
 package org.iffomko.server.repositories;
 
-import org.iffomko.server.domain.table.BarTable;
+import org.iffomko.server.domain.bartable.BarTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

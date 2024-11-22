@@ -1,6 +1,6 @@
 package org.iffomko.server.services;
 
-import org.iffomko.server.domain.table.BarTable;
+import org.iffomko.server.domain.bartable.BarTable;
 import org.iffomko.server.repositories.BarTableRepository;
 import org.springframework.stereotype.Service;
 

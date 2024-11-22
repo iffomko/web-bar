@@ -1,58 +1,52 @@
 package org.iffomko.server.services;
 
-import org.iffomko.server.domain.Customer;
+import org.iffomko.server.domain.User;
 import org.iffomko.server.domain.Reservation;
 import org.iffomko.server.exceptions.LocalizedException;
 import org.iffomko.server.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservationService {
-    private static final String CUSTOMER_PHONE_ABSENT_MESSAGE = "reservation.validation.customer.phone-absent";
-    private static final String CUSTOMER_NOT_EXIST_MESSAGE = "reservation.validation.customer.not-exist";
+    private static final String USER_PHONE_ABSENT_MESSAGE = "validation.user.phone-absent";
+    private static final String USER_NOT_EXIST_MESSAGE = "validation.user.not-found";
 
-    private final CustomerService customerService;
+    private final UserService userService;
     private final ReservationRepository reservationRepository;
 
-    public ReservationService(CustomerService customerService,
+    public ReservationService(UserService userService,
                               ReservationRepository reservationRepository) {
-        this.customerService = customerService;
+        this.userService = userService;
         this.reservationRepository = reservationRepository;
     }
 
     public void save(Reservation reservation) {
-        Customer customer = reservation.getCustomer();
-        if (customer == null || customer.getPhone() == null) {
-            throw new LocalizedException(CUSTOMER_PHONE_ABSENT_MESSAGE);
+        User user = reservation.getUser();
+        if (user == null || user.getPhone() == null) {
+            throw new LocalizedException(USER_PHONE_ABSENT_MESSAGE);
         }
-        Optional<Customer> existCustomer = customerService.loadByPhone(customer.getPhone());
-        if (existCustomer.isEmpty()) {
-            reservation.getCustomer().setId(0);
-            reservationRepository.save(reservation);
-            return;
-        }
-        reservation.setCustomer(existCustomer.get());
-        reservationRepository.save(reservation);
+        userService.byPhone(user.getPhone())
+                .map(realUser -> {
+                    reservation.setUser(realUser);
+                    return reservationRepository.save(reservation);
+                })
+                .orElseThrow(() -> new LocalizedException(USER_NOT_EXIST_MESSAGE, user.getPhone()));
     }
 
-    public List<Reservation> loadByCustomerPhone(String phone) { // todo: сделать валидацию номера
-        Optional<Customer> loadedCustomer = customerService.loadByPhone(phone);
-        if (loadedCustomer.isEmpty()) {
-            throw new LocalizedException(CUSTOMER_NOT_EXIST_MESSAGE);
-        }
-        Customer customer = loadedCustomer.get();
-        return reservationRepository.findAllByCustomerId(customer.getId());
+    public List<Reservation> byUserPhone(String phone) { // todo: сделать валидацию номера
+        return userService.byPhone(phone)
+                .map(user -> reservationRepository.findAllByUserId(user.getId()))
+                .orElseThrow(() -> new LocalizedException(USER_NOT_EXIST_MESSAGE, phone));
     }
 
-    public void deleteReservationByPhone(String phone) {
-        Optional<Customer> loadedCustomer = customerService.loadByPhone(phone);
-        if (loadedCustomer.isEmpty()) {
-            throw new LocalizedException(CUSTOMER_NOT_EXIST_MESSAGE);
-        }
-        Customer customer = loadedCustomer.get();
-        reservationRepository.deleteAllByCustomerId(customer.getId());
+    public void deleteByUserPhone(String phone) {
+        userService.byPhone(phone)
+                .map(user -> {
+                    reservationRepository.deleteAllByUserId(user.getId());
+                    return true;
+                })
+                .orElseThrow(() -> new LocalizedException(USER_NOT_EXIST_MESSAGE, phone));
     }
 }

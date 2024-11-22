@@ -8,14 +8,18 @@ import lombok.Setter;
 @Table(name = "CUSTOMER")
 @Getter
 @Setter
-public class Customer {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "PHONE", unique = true, nullable = false)
+    @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-    @Column(name = "FIRST_NAME")
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private Role role;
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
     private String lastName;
 }
