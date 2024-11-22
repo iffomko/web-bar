@@ -1,6 +1,5 @@
 package org.iffomko.server.configs;
 
-import org.iffomko.server.domain.security.BasicPasswordEncoderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import static org.iffomko.server.domain.ControllerNames.*;
 
@@ -41,10 +39,9 @@ public class AuthConfig {
         http.authorizeHttpRequests(registry -> registry
                 .requestMatchers(REGISTRATION_URL).permitAll()
                 .anyRequest().authenticated());
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(AbstractHttpConfigurer::disable);
-        http.httpBasic(configure -> configure.authenticationEntryPoint(entryPoint))
-                /*.addFilterAfter(new BasicPasswordEncoderFilter(), BasicAuthenticationFilter.class)*/;
+        http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable);
+        http.httpBasic(configure -> configure.authenticationEntryPoint(entryPoint));
         return http.build();
     }
 }

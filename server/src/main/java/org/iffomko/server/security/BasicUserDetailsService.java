@@ -26,8 +26,8 @@ public class BasicUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         return userService.byPhone(phone)
                 .map(BasicUserDetails::fromUser)
-                .orElseThrow(() -> new UsernameNotFoundException(getMessage(USER_NOT_FOUND_MESSAGE,
-                        getPrettyPhone(phone))));
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        getMessage(USER_NOT_FOUND_MESSAGE, getPrettyPhone(phone))));
     }
 
     private String getMessage(String key, Object... args) {
