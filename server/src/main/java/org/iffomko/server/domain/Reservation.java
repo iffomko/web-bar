@@ -8,7 +8,7 @@ import org.iffomko.server.domain.bartable.BarTable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "RESERVATIONS")
 @Getter
 @Setter
 public class Reservation {
