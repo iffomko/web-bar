@@ -1,0 +1,92 @@
+<div class="header">
+  <div class="container">
+    <div class="header-preview">
+      <img src="/logo.png" alt="Логотип" class="logo"/>
+      <h1 class="header-title">Бар у Мат-Меха</h1>
+    </div>
+    <nav class="nav">
+      <a [routerLink]="'/'" class="nav-items">Главная</a>
+      <a [routerLink]="'/tables'" class="nav-items">Столы</a>
+      <a [routerLink]="'/reservations'" class="nav-items" *ngIf="currentUser">Бронь</a>
+    </nav>
+    <button *ngIf="!currentUser" (click)="openLoginModal()">Войти</button>
+    <div class="current-login-wrapper" *ngIf="currentUser">
+      <p>{{ currentUser.firstName }}</p>
+      <button (click)="logout($event)">Выйти</button>
+    </div>
+  </div>
+</div>
+
+<app-modal *ngIf="showLoginModal"
+           (closeEvent)="closeModals()">
+  <h2 class="modal-title">Вход</h2>
+  <form class="form">
+    <label>
+      <span>Номер телефона:</span>
+      <input type="text"
+             name="phone"
+             [value]="userLogin.phone"
+             (change)="changeLoginPhone($event)"
+      />
+    </label>
+    <label>
+      <span>Пароль:</span>
+      <input type="password"
+             name="password"
+             autocomplete="new-password"
+             [value]="userLogin.password"
+             (change)="changeLoginPassword($event)"
+      />
+    </label>
+    <p *ngIf="loginErrorMessage" class="error-message">{{ loginErrorMessage }}</p>
+    <div class="form-actions">
+      <button id="sign-on-btn" (click)="login($event)">Войти</button>
+      <a href="#" (click)="openRegisterModal()">Зарегистрироваться</a>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal *ngIf="showRegisterModal"
+           (closeEvent)="closeModals()">
+  <h2 class="modal-title">Регистрация</h2>
+  <form class="form">
+    <label>
+      <span>Имя:</span>
+      <input type="text"
+             name="firstName"
+             autocomplete="new-password"
+             [value]="userRegistration.firstName"
+             (change)="changeRegisterFirstName($event)"
+      />
+    </label>
+    <label>
+      <span>Фамилия:</span>
+      <input type="text"
+             name="lastName"
+             autocomplete="new-password"
+             [value]="userRegistration.lastName"
+             (change)="changeRegisterLastName($event)"
+      />
+    </label>
+    <label>
+      <span>Номер телефона:</span>
+      <input type="text"
+             name="phone"
+             autocomplete="new-password"
+             [value]="userRegistration.phone"
+             (change)="changeRegisterPhone($event)"
+      />
+    </label>
+    <label>
+      <span>Пароль:</span>
+      <input type="password"
+             name="password"
+             autocomplete="new-password"
+             [value]="userRegistration.password"
+             (change)="changeRegisterPassword($event)"
+      />
+    </label>
+    <p *ngIf="registrationErrorMessage" class="error-message">{{ registrationErrorMessage }}</p>
+    <button id="sign-up-btn" (click)="register($event)">Регистрация</button>
+  </form>
+</app-modal>

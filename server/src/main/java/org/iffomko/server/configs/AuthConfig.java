@@ -3,6 +3,7 @@ package org.iffomko.server.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +22,8 @@ public class AuthConfig {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
-    public AuthConfig(AuthenticationEntryPoint entryPoint, PasswordEncoder passwordEncoder,
+    public AuthConfig(AuthenticationEntryPoint entryPoint,
+                      PasswordEncoder passwordEncoder,
                       UserDetailsService userDetailsService) {
         this.entryPoint = entryPoint;
         this.passwordEncoder = passwordEncoder;
@@ -38,9 +40,10 @@ public class AuthConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> registry
                 .requestMatchers(REGISTRATION_URL).permitAll()
+                .requestMatchers(LOGIN_URL).permitAll()
                 .anyRequest().authenticated());
         http.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable);
+                .cors(Customizer.withDefaults());
         http.httpBasic(configure -> configure.authenticationEntryPoint(entryPoint));
         return http.build();
     }

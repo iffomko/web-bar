@@ -1,0 +1,132 @@
+.header {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 60vw;
+
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.header-title {
+  font-size: 1.25rem;
+}
+
+.header-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-preview img {
+  margin-right: 1rem;
+}
+
+button {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-items {
+  color: white;
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  margin-right: 1rem;
+}
+
+.nav-items:last-child {
+  margin-right: 0;
+}
+
+.form a {
+  color: #333;
+  font-size: 1rem;
+
+  text-decoration: none;
+}
+
+.form label {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+}
+
+.form label span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 1rem;
+}
+
+.form label input {
+  display: block;
+  box-sizing: border-box;
+
+  padding: 0.5rem 1rem;
+
+  background-color: #fff;
+
+  outline: none;
+  border: 0.1rem solid #333;
+  border-radius: 0.3rem;
+}
+
+.form button {
+  font-size: 1rem;
+
+  margin-right: 10px;
+}
+
+.modal-title {
+  margin: 0.5rem 0 2rem 0;
+
+  text-align: center;
+}
+
+.form-actions {
+  margin: 2rem 0 0 0;
+}
+
+.error-message {
+  color: red;
+  font-size: 1rem;
+
+  margin: 1rem 0;
+}
+
+.current-login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-login-wrapper p {
+  margin-right: 1rem;
+}

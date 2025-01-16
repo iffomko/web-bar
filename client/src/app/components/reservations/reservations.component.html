@@ -1,0 +1,9 @@
+<p *ngIf="!tablesReserved || tablesReserved.length === 0" class="tables-reserved">Вы еще ничего не забронировали</p>
+<div class="tables-container">
+  <div class="table" *ngFor="let table of tablesReserved">
+    <h3>{{ table.name }}</h3>
+    <p>Вместимость: {{ table.capacity }}</p>
+    <p>Дата: {{ formatDate(table.reservationDate) }}</p>
+    <button class="cancel-reservation" (click)="cancel(table)">Отменить бронь</button>
+  </div>
+</div>

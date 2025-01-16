@@ -1,0 +1,32 @@
+.home-image {
+  background-image: url("/bar.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+
+  max-width: 60vw;
+
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+p {
+  text-align: justify;
+
+  margin: 0.25rem 0;
+}
+
+.star-img {
+  width: 10rem;
+
+  margin: 0 auto;
+}

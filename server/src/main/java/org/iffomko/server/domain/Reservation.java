@@ -1,28 +1,51 @@
 package org.iffomko.server.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.iffomko.server.domain.bartable.BarTable;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "RESERVATIONS")
-@Getter
-@Setter
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "bar_table_id", nullable = false)
-    private BarTable table;
+    @Column(name = "customer_id", nullable = false)
+    private int customerId;
+    @Column(name = "bar_table_id", nullable = false)
+    private int tableId;
     @Column(name = "reservation_date")
     private Instant reservationDate;
-    @Column(name = "table_reservation_date")
-    private Instant tableReservationDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public int getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(int tableId) {
+        this.tableId = tableId;
+    }
+
+    public Instant getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(Instant reservationDate) {
+        this.reservationDate = reservationDate;
+    }
 }

@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.iffomko.server.domain.ControllerNames.USERS_URI_PART;
 import static org.iffomko.server.domain.ControllerNames.RESERVATION_URL;
 
 @RestController
 @RequestMapping(RESERVATION_URL)
-@CrossOrigin("/**")
+@CrossOrigin("http://localhost:4200/")
 public class ReservationController {
     private final ReservationService reservationService;
 
@@ -20,17 +19,17 @@ public class ReservationController {
     }
 
     @PostMapping
-    public void makeReservation(Reservation reservation) {
-        reservationService.save(reservation);
+    public void makeReservation(@RequestBody Reservation reservation, @RequestParam String userPhone) {
+        reservationService.save(reservation, userPhone);
     }
 
-    @GetMapping(USERS_URI_PART)
-    public List<Reservation> loadReservations(@RequestParam("phone") String phone) {
+    @GetMapping
+    public List<Reservation> loadReservations(@RequestParam("userPhone") String phone) {
         return reservationService.byUserPhone(phone);
     }
 
-    @DeleteMapping(USERS_URI_PART)
-    public void deleteReservation(@RequestParam("phone") String phone) {
-        reservationService.deleteByUserPhone(phone);
+    @DeleteMapping
+    public void deleteReservation(@RequestParam("id") int id) {
+        reservationService.delete(id);
     }
 }
